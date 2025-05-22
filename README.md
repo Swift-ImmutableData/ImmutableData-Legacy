@@ -44,13 +44,55 @@ Please file a GitHub issue if you encounter any compatibility problems.
 
 ## Usage
 
-The `ImmutableData` package makes three library modules available to your products:
+The `ImmutableData-Legacy` package makes three library modules available to your products:
 
 * `ImmutableData`: This is the “data” infra. This module builds the basic types for managing the data models of your global application state.
 * `ImmutableUI`: This is the “UI” infra. This module builds the basic types for displaying and transforming global application state in your SwiftUI component graph.
 * `AsyncSequenceTestUtils`: This module helps us write predictable and deterministic tests for certain asynchronous operations. This is *not* intended to ship as a dependency in your production code — this is *only* intended for test code.
 
 *The ImmutableData Programming Guide* presents complete sample application product tutorials. This is the recommended way to learn how to build products with `ImmutableData`.
+
+Start by importing the `ImmutableData-Legacy` package as a dependency. Here is an example from Swift Package Manager:
+
+```swift
+// swift-tools-version: 6.0
+
+import PackageDescription
+
+let package = Package(
+  name: "MyPackage",
+  platforms: [
+    .macOS(.v10_15),
+    .iOS(.v13),
+    .tvOS(.v13),
+    .watchOS(.v6),
+    .macCatalyst(.v13),
+  ],
+  dependencies: [
+    .package(
+      url: "https://github.com/Swift-ImmutableData/ImmutableData-Legacy",
+      from: "0.3.0"
+    )
+  ],
+  targets: [
+    .target(
+      name: "MyPackage",
+      dependencies: [
+        .product(
+          name: "ImmutableData",
+          package: "ImmutableData-Legacy"
+        ),
+        .product(
+          name: "ImmutableUI",
+          package: "ImmutableData-Legacy"
+        ),
+      ]
+    )
+  ]
+)
+```
+
+If you use Xcode to manage your app’s dependencies, Apple publishes documentation with steps you can follow to add `ImmutableData` directly through Xcode.[^2]
 
 A very basic “Hello World” application would be a Counter: a SwiftUI application to increment and decrement an integer value.
 
@@ -203,3 +245,4 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 [^1]: https://developer.apple.com/videos/play/wwdc2019/226
+[^2]: https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app
