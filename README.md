@@ -1,4 +1,4 @@
-# ImmutableData-Legacy 0.3.0
+# ImmutableData-Legacy 0.4.0
 
 [![Builds](https://github.com/Swift-ImmutableData/ImmutableData-Legacy/actions/workflows/builds.yml/badge.svg?branch=main)](https://github.com/Swift-ImmutableData/ImmutableData-Legacy/actions/workflows/builds.yml)
 [![Tests](https://github.com/Swift-ImmutableData/ImmutableData-Legacy/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/Swift-ImmutableData/ImmutableData-Legacy/actions/workflows/tests.yml)
