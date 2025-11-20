@@ -96,6 +96,70 @@ extension ImmutableUI.Selector {
   }
 }
 
+extension ImmutableUI.Selector {
+  mutating func update(
+    id: some Hashable,
+    label: String? = nil,
+    filter isIncluded: (@Sendable (Store.State, Store.Action) -> Bool)? = nil,
+    dependencySelector: @escaping @Sendable (Store.State) -> Dependency,
+    outputSelector: @escaping @Sendable (Store.State) -> Output
+  ) where Store == ImmutableData.Store<QuakesState, QuakesAction>, Dependency : Equatable, Output : Equatable {
+    self.update(
+      id: id,
+      label: label,
+      filter: isIncluded,
+      dependencySelector: DependencySelector(select: dependencySelector),
+      outputSelector: OutputSelector(select: outputSelector)
+    )
+  }
+}
+
+extension ImmutableUI.Selector {
+  mutating func update(
+    id: some Hashable,
+    label: String? = nil,
+    filter isIncluded: (@Sendable (Store.State, Store.Action) -> Bool)? = nil,
+    outputSelector: @escaping @Sendable (Store.State) -> Output
+  ) where Store == ImmutableData.Store<QuakesState, QuakesAction>, Dependency == Never, Output : Equatable {
+    self.update(
+      id: id,
+      label: label,
+      filter: isIncluded,
+      outputSelector: OutputSelector(select: outputSelector)
+    )
+  }
+}
+
+extension ImmutableUI.Selector {
+  mutating func update(
+    label: String? = nil,
+    filter isIncluded: (@Sendable (Store.State, Store.Action) -> Bool)? = nil,
+    dependencySelector: @escaping @Sendable (Store.State) -> Dependency,
+    outputSelector: @escaping @Sendable (Store.State) -> Output
+  ) where Store == ImmutableData.Store<QuakesState, QuakesAction>, Dependency : Equatable, Output : Equatable {
+    self.update(
+      label: label,
+      filter: isIncluded,
+      dependencySelector: DependencySelector(select: dependencySelector),
+      outputSelector: OutputSelector(select: outputSelector)
+    )
+  }
+}
+
+extension ImmutableUI.Selector {
+  mutating func update(
+    label: String? = nil,
+    filter isIncluded: (@Sendable (Store.State, Store.Action) -> Bool)? = nil,
+    outputSelector: @escaping @Sendable (Store.State) -> Output
+  ) where Store == ImmutableData.Store<QuakesState, QuakesAction>, Dependency == Never, Output : Equatable {
+    self.update(
+      label: label,
+      filter: isIncluded,
+      outputSelector: OutputSelector(select: outputSelector)
+    )
+  }
+}
+
 @MainActor @propertyWrapper struct SelectQuakes: DynamicProperty {
   @ImmutableUI.Selector<ImmutableData.Store<QuakesState, QuakesAction>, Never, TreeDictionary<Quake.ID, Quake>> var wrappedValue: TreeDictionary<Quake.ID, Quake>
   
